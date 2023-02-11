@@ -22,7 +22,7 @@
 
 
 /* Change this size based on the biggest matrix you will use */
-#define MATRIX_MAXIMUM_SIZE     (9)
+#define MATRIX_MAXIMUM_SIZE     (6)
 
 /* Define this to enable matrix bound checking */
 #define MATRIX_USE_BOUNDS_CHECKING
