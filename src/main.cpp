@@ -251,15 +251,16 @@ void loop() {
         bool pitch_written = false;
         for (int i = 0; i < incoming_count; i++) {
             unsigned char incomingByte = incoming_buffer[i];
+            incoming_buffer[i] = 0;
             // Check for control character
             if (incomingByte > 13) {
                 // remap [14;104] to [0;90]
                 incomingByte -= 14;
 
                 // Check first bit to decide which servo to take
-                bool yawbit = true;
-                if ((incomingByte >> 7) & 1) {
-                    yawbit = false;
+                bool yawbit = false;
+                if (((incomingByte >> 7) & 1) > 0) {
+                    yawbit = true;
                 }
 
                 // set first bit to 0
@@ -272,9 +273,15 @@ void loop() {
                 if (yawbit) {
                     ServoYaw.write(degrees);
                     yaw_written = true;
+                    delay(20);
+                    Serial.print("Yaw:");
+                    Serial.print(degrees);
                 } else {
                     ServoPitch.write(90 + degrees);
                     pitch_written = true;
+                    delay(20);
+                    Serial.print("Pitch:");
+                    Serial.print(90 + degrees);
                 }
             }
 
